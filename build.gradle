@@ -20,12 +20,11 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'software.amazon.awssdk:s3:2.20.56' // Укажите актуальную версию
+    implementation 'software.amazon.awssdk:s3:2.20.56'
     implementation 'software.amazon.awssdk:auth:2.20.56'
     implementation 'software.amazon.awssdk:regions:2.20.56'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
-
 
 tasks.named('test') {
     useJUnitPlatform()
