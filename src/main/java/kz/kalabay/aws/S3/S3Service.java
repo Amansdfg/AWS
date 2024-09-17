@@ -1,4 +1,4 @@
-package kz.kalabay.aws;
+package kz.kalabay.aws.S3;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
