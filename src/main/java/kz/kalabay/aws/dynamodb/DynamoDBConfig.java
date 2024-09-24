@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.regions.Region;
@@ -15,7 +16,7 @@ public class DynamoDBConfig {
     @Bean
     public DynamoDbClient dynamoDbClient() {
         return DynamoDbClient.builder()
-                .region(Region.of("us-west-2")) // Change to your DynamoDB region
+                .region(Region.of("us-west-2")) // Adjust region
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create("your-access-key", "your-secret-key")))
                 .build();
@@ -27,9 +28,8 @@ public class DynamoDBConfig {
                 .dynamoDbClient(dynamoDbClient)
                 .build();
     }
-
     @Bean
     public DynamoDbTable<User> userTable(DynamoDbEnhancedClient dynamoDbEnhancedClient) {
-        return dynamoDbEnhancedClient.table("Users", User.class);
+        return dynamoDbEnhancedClient.table("Users", TableSchema.fromBean(User.class));
     }
 }

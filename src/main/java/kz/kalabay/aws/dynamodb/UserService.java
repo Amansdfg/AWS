@@ -4,7 +4,8 @@ import kz.kalabay.aws.dynamodb.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
-import software.amazon.awssdk.enhanced.dynamodb.model.Key;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+
 
 @Service
 public class UserService {
