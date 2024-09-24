@@ -1,7 +1,5 @@
 package kz.kalabay.aws.dynamodb;
 
-import kz.kalabay.aws.dynamodb.User;
-import kz.kalabay.aws.dynamodb.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

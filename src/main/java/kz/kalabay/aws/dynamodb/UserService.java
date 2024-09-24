@@ -1,6 +1,5 @@
 package kz.kalabay.aws.dynamodb;
 
-import kz.kalabay.aws.dynamodb.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
