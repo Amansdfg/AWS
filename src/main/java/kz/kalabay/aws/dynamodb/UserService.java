@@ -8,9 +8,7 @@ import software.amazon.awssdk.enhanced.dynamodb.Key;
 
 @Service
 public class UserService {
-
     private final DynamoDbTable<User> userTable;
-
     @Autowired
     public UserService(DynamoDbTable<User> userTable) {
         this.userTable = userTable;
