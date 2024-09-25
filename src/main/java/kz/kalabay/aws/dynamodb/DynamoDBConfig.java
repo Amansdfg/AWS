@@ -13,29 +13,35 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 @Configuration
 public class DynamoDBConfig {
+
     @Value("${aws.region}")
     private String REGION;
     @Value("${aws.accessKeyId}")
     private String ACCESS_KEY;
     @Value("@${aws.secretKey}")
     private String SECRET_KEY;
+
     @Bean
     public DynamoDbClient dynamoDbClient() {
+
         return DynamoDbClient.builder()
-                .region(Region.of(REGION))
-                .credentialsProvider(StaticCredentialsProvider.create(
-                        AwsBasicCredentials.create(ACCESS_KEY, SECRET_KEY)))
-                .build();
+            .region(Region.of(REGION))
+            .credentialsProvider(StaticCredentialsProvider.create(
+                AwsBasicCredentials.create(ACCESS_KEY, SECRET_KEY)))
+            .build();
     }
 
     @Bean
     public DynamoDbEnhancedClient dynamoDbEnhancedClient(DynamoDbClient dynamoDbClient) {
+
         return DynamoDbEnhancedClient.builder()
             .dynamoDbClient(dynamoDbClient)
             .build();
     }
+
     @Bean
     public DynamoDbTable<User> userTable(DynamoDbEnhancedClient dynamoDbEnhancedClient) {
+
         return dynamoDbEnhancedClient.table("Users", TableSchema.fromBean(User.class));
     }
 }

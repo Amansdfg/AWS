@@ -5,20 +5,24 @@ import org.springframework.stereotype.Service;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 
-
 @Service
 public class UserService {
+
     private final DynamoDbTable<User> userTable;
+
     @Autowired
     public UserService(DynamoDbTable<User> userTable) {
+
         this.userTable = userTable;
     }
 
     public void saveUser(User user) {
+
         userTable.putItem(user);
     }
 
     public User getUserById(String id) {
+
         Key key = Key.builder()
             .partitionValue(id)
             .build();
@@ -26,6 +30,7 @@ public class UserService {
     }
 
     public void deleteUserById(String id) {
+
         Key key = Key.builder()
             .partitionValue(id)
             .build();

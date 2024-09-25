@@ -1,4 +1,5 @@
 package kz.kalabay.aws.S3;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -10,12 +11,14 @@ import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
+
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class S3Service {
+
     private final S3Client s3Client;
     private final String bucketName;
     @Value("${aws.accessKeyId}")
@@ -26,10 +29,14 @@ public class S3Service {
     private String REGION;
     @Value("${aws.s3.bucket-name}")
     private String BUCKET_NAME;
-    public S3Service(@Value("${aws.accessKeyId}") String accessKeyId,
-                     @Value("${aws.secretKey}") String secretKey,
-                     @Value("${aws.region}") String region,
-                     @Value("${aws.s3.bucket-name}") String bucketName) {
+
+    public S3Service(
+        @Value("${aws.accessKeyId}") String accessKeyId,
+        @Value("${aws.secretKey}") String secretKey,
+        @Value("${aws.region}") String region,
+        @Value("${aws.s3.bucket-name}") String bucketName
+    ) {
+
         this.bucketName = bucketName;
         AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretKey);
         this.s3Client = S3Client.builder()
@@ -37,7 +44,9 @@ public class S3Service {
             .region(Region.of(region))
             .build();
     }
+
     public void uploadFile(String key, Path filePath) {
+
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucketName)
@@ -51,15 +60,17 @@ public class S3Service {
             System.err.println(e.awsErrorDetails().errorMessage());
         }
     }
+
     public List<String> listFiles() {
+
         ListObjectsV2Request listObjectsRequest = ListObjectsV2Request.builder()
-                .bucket(bucketName)
-                .build();
+            .bucket(bucketName)
+            .build();
 
         ListObjectsV2Response listObjectsResponse = s3Client.listObjectsV2(listObjectsRequest);
 
         return listObjectsResponse.contents().stream()
-                .map(S3Object::key)
-                .collect(Collectors.toList());
+            .map(S3Object::key)
+            .collect(Collectors.toList());
     }
 }

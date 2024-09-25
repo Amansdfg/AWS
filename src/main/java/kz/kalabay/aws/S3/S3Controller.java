@@ -13,10 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/s3")
 public class S3Controller {
+
     @Autowired
     private S3Service s3Service;
+
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+
         String key = file.getOriginalFilename();
         try {
             Path tempFile = Files.createTempFile("upload-", key);
@@ -29,8 +32,10 @@ public class S3Controller {
             return ResponseEntity.status(500).body("File upload failed.");
         }
     }
+
     @GetMapping("/files")
     public ResponseEntity<List<String>> listFiles() {
+
         List<String> fileList = s3Service.listFiles();
         return ResponseEntity.ok(fileList);
     }
