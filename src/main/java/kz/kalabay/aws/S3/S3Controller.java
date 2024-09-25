@@ -26,7 +26,7 @@ public class S3Controller {
             Files.write(tempFile, file.getBytes());
             s3Service.uploadFile(key, tempFile);
             Files.deleteIfExists(tempFile);
-            return ResponseEntity.ok("File uploaded successfully to S3.");
+            return ResponseEntity.ok("File with name"+ key +" uploaded successfully to S3.");
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("File upload failed.");

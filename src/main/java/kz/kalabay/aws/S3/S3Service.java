@@ -1,5 +1,6 @@
 package kz.kalabay.aws.S3;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -19,37 +20,16 @@ import java.util.stream.Collectors;
 @Service
 public class S3Service {
 
-    private final S3Client s3Client;
-    private final String bucketName;
-    @Value("${aws.accessKeyId}")
-    private String ACCESS_KEY_ID;
-    @Value("${aws.secretKey}")
-    private String SECRET_KEY;
-    @Value("${aws.region}")
-    private String REGION;
+    @Autowired
+    private S3Client s3Client;
     @Value("${aws.s3.bucket-name}")
     private String BUCKET_NAME;
-
-    public S3Service(
-        @Value("${aws.accessKeyId}") String accessKeyId,
-        @Value("${aws.secretKey}") String secretKey,
-        @Value("${aws.region}") String region,
-        @Value("${aws.s3.bucket-name}") String bucketName
-    ) {
-
-        this.bucketName = bucketName;
-        AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretKey);
-        this.s3Client = S3Client.builder()
-            .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
-            .region(Region.of(region))
-            .build();
-    }
 
     public void uploadFile(String key, Path filePath) {
 
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket(bucketName)
+                .bucket(BUCKET_NAME)
                 .key(key)
                 .build();
 
@@ -64,7 +44,7 @@ public class S3Service {
     public List<String> listFiles() {
 
         ListObjectsV2Request listObjectsRequest = ListObjectsV2Request.builder()
-            .bucket(bucketName)
+            .bucket(BUCKET_NAME)
             .build();
 
         ListObjectsV2Response listObjectsResponse = s3Client.listObjectsV2(listObjectsRequest);
