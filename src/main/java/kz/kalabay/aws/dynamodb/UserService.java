@@ -20,15 +20,15 @@ public class UserService {
 
     public User getUserById(String id) {
         Key key = Key.builder()
-                .partitionValue(id)
-                .build();
+            .partitionValue(id)
+            .build();
         return userTable.getItem(r -> r.key(key));
     }
 
     public void deleteUserById(String id) {
         Key key = Key.builder()
-                .partitionValue(id)
-                .build();
+            .partitionValue(id)
+            .build();
         userTable.deleteItem(r -> r.key(key));
     }
 }

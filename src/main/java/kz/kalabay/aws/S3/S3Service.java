@@ -12,6 +12,14 @@ import java.nio.file.Path;
 public class S3Service {
     private final S3Client s3Client;
     private final String bucketName;
+    @Value("${aws.accessKeyId}")
+    private String ACCESS_KEY_ID;
+    @Value("${aws.secretKey}")
+    private String SECRET_KEY;
+    @Value("${aws.region}")
+    private String REGION;
+    @Value("${aws.s3.bucket-name}")
+    private String BUCKET_NAME;
     public S3Service(@Value("${aws.accessKeyId}") String accessKeyId,
                      @Value("${aws.secretKey}") String secretKey,
                      @Value("${aws.region}") String region,
@@ -19,16 +27,16 @@ public class S3Service {
         this.bucketName = bucketName;
         AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretKey);
         this.s3Client = S3Client.builder()
-                .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
-                .region(Region.of(region))
-                .build();
+            .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
+            .region(Region.of(region))
+            .build();
     }
     public void uploadFile(String key, Path filePath) {
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(key)
-                    .build();
+                .bucket(bucketName)
+                .key(key)
+                .build();
 
             s3Client.putObject(putObjectRequest, filePath);
 

@@ -31,8 +31,8 @@ public class DynamoDBConfig {
     @Bean
     public DynamoDbEnhancedClient dynamoDbEnhancedClient(DynamoDbClient dynamoDbClient) {
         return DynamoDbEnhancedClient.builder()
-                .dynamoDbClient(dynamoDbClient)
-                .build();
+            .dynamoDbClient(dynamoDbClient)
+            .build();
     }
     @Bean
     public DynamoDbTable<User> userTable(DynamoDbEnhancedClient dynamoDbEnhancedClient) {
