@@ -17,7 +17,7 @@ public class DynamoDBConfig {
     private String REGION;
     @Value("${aws.accessKeyId}")
     private String ACCESS_KEY;
-    @Value("${aws.secretKey}")
+    @Value("@${aws.secretKey}")
     private String SECRET_KEY;
     @Bean
     public DynamoDbClient dynamoDbClient() {

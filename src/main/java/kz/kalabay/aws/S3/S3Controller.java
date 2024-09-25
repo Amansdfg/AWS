@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+
 @RestController
 @RequestMapping("/s3")
 public class S3Controller {
@@ -26,5 +28,10 @@ public class S3Controller {
             e.printStackTrace();
             return ResponseEntity.status(500).body("File upload failed.");
         }
+    }
+    @GetMapping("/files")
+    public ResponseEntity<List<String>> listFiles() {
+        List<String> fileList = s3Service.listFiles();
+        return ResponseEntity.ok(fileList);
     }
 }
